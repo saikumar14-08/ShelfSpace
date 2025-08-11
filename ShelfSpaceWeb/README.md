@@ -104,3 +104,90 @@ Example:
 	-> To avoid this we create a layer with dependency injection container and in this we create objects and use them in the pages.
 	-> By doing this a lot of memory gets saved, code looks good(few lines) and in future if you want to change the db or email class then you can change only at one place
 	
+-> Usually we don't create databases directly instead we write models and the entity framework makes use of this models and creates a database.
+-> Files in Controllers and Views folders follow a naming convention like below:
+	-> Controller: HomeController.cs
+	-> Viewls: Index.cshtml
+-> But models don't have such criteria. You can name them whatever you want.
+-> We created a category model and added some properties.
+-> To make the property as primary key we have to data annotation.
+-> Data Annotation is nothing but [Key], [Required] - Just put these before the properties.
+-> Now that we have created columns(properties) of the database and mentioned the primary key and mandatory fields. We have to create a connection Stirng.
+
+-> Install SQL Server and SQL Server Management Studio(SMMS).
+-> After that connect to any server like localhost or . 
+-> Although we set up our entity framework in Program.cs but we have to declare our DB string in our appSettings.json.
+-> Create a ConnectionStrings entry in the file and put the connection details like shown below:
+	"ConnectionStrings": {
+		"DBConn": "Server:.;Database=Shelf;Trusted_Connection=True;TrustedServerCertificate=True"
+	  }
+
+-> Settign up .NET entity framework: 
+	-> Right click on the prject folder and select "Manage NuGet Packages" and then install the below mentioned 3 packages.
+	-> Make sure you install the packages with version same as your .Net version. If not things doesn't work.
+	-> Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.SqlServer, Microsoft.EntityFrameworkCore.Tools
+	-> Create a new folder in parent directory with name "Data".
+	-> Create a ApplicationDbContext class in data folder.
+	-> Any class in ApplicationDbContext should extend DbContext class.
+	-> Create a constructor.
+	-> DbContext class -- Manages connection + represents your database.
+	-> Entity class	-- Represents one table row (schema of your table)
+	-> Registering DbContext -- Tells the app how to create your DbContext with config.
+
+-> Click on Tools -> NuGet Package Manager -> Package Manager Console.
+-> To create a database, type update-database in the console and enter.
+	-> You can get two types of errors here:
+		1. Either the key in appsettings.json is wrong.
+		2. Or the DB connection String is wrong.
+
+-> Creating a Category table:
+	-> We already declared the Category Model.
+	-> In our ApplicationDBContext we have to create a DBSet of our table.
+	-> Type add-migration <Any name> in console  and enter.
+	-> After this migrations folder will be added directly to our project structure.
+	-> But you cannot see the table in your SQLMS.
+	-> For that, you need to update-database.
+
+-> CRUD operations of Category table.
+	-> Create a Category controller.
+	-> Create a Category folder in Views folder then Index.cshtml in it.
+	-> This view loads when you navigate to the category url
+	-> Go to _Layout.cshtml in Shared folder in Views folder and add Catrgory there.
+	-> You can use attributes like asp-controller="Category" asp-action="Index" in the anchor to 
+		understand what controller should be used and what view should be loaded.
+
+-> Seeding Category table:
+	-> We can directly add entries in our SQL but we can do that using our entity core framework.
+	-> Create a function and give the information there like shown below:
+		 protected override void OnModelCreating(ModelBuilder modelBuilder)
+         {
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
+                new Category { Id = 2, Name = "Sci-Fi", DisplayOrder = 2 },
+                new Category { Id = 3, Name = "History", DisplayOrder = 3 }
+
+                );
+		 }
+	-> After this we have to give add-migration SeedCategoryTable in Nuget console.
+	-> Then update-databse to get details updated on our table in SQLMS.
+
+-> Get all Categories in the UI:
+	-> Goto CategoryController.cs and then create a constructor which takes the ApplicationDBContext as an arg.
+	-> This is responsible to fetch the data from DB and then we do View(data).
+	-> This passes the data and we use this data in our view like below:
+	-> In the starting line we put @model List<Category> and this can be iterated using @foreach(var cat in Model)
+		and then @cat.<your data>
+
+-> Creating a new category from UI:
+	-> Create a button in UI.
+	-> We first have to create an action method that will be invoked and call the view.
+	-> These action methods are written in the controller(CategoryController).
+	-> After writing these, right click on the method and select Add View.
+	-> This creates a cshtml view and now you can edit the file based on your requirement.
+	-> Before that we have to map the button to our action method using the asp-action attr
+-> Input tag helper: The asp-for attribute is a server-side attribute used within HTML elements (like <input>, <label>, <select>, <textarea>) in Razor views in ASP.NET Core.
+	Its primary function is to bind an HTML element to a specific property of a model passed to the view.
+
+
+Progams orders:
+-> Created a Category model.
