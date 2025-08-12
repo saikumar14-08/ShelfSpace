@@ -193,6 +193,24 @@ Example:
 -> To save our data in the DB, we used post form. For that, now we have to goto out category controller and we have create a action method which takes the Category obj as arg and add the obj to the DB and save the changes to db.
 	-> _db.Add(obj); _db.SaveChanges()
 
+Server Side Validations:
+-> Server-side validation always runs regardless of client-side validation and is essential for security.
+-> Model validation happens automatically when a controller action receives a model parameter decorated with validation attributes.
+-> You check validation state in the controller using:
+	if (!ModelState.IsValid) — means validation failed.
+-> Use ModelState.AddModelError to add custom validation errors manually in controller or service logic.
+-> ModelState.AddModelError("PropertyName", "Error message") — property-specific error.
+-> ModelState.AddModelError(string.Empty, "Error message") — model-level (general) error.
+-> After validation fails, return the model and errors back to the view so errors can be displayed.
+
+Server-side validation handles:
+-> Complex rules that client-side can’t enforce (e.g., checking database uniqueness).
+-> Protects against malicious or disabled client-side validation.
+-> Validation attributes like [Required], [Range], etc., run on server during model binding.
+-> You can implement custom validation attributes by inheriting from ValidationAttribute and overriding IsValid method.
+-> Use TryValidateModel(model) if you want to validate a model manually inside controller or service.
+-> To get all errors in code, you can iterate over ModelState.Values and their .Errors collection.
+
 
 	=============== FLOW =============
 
@@ -244,3 +262,36 @@ Inject the context into the constructor:
 	}
 7. Create the View
 Create a Views/Category/Index.cshtml view to display the categories.
+
+
+Client-Side Validation:
+-> asp-validation-summary displays validation errors summary in one place.
+-> "All" shows all errors (property-level + model-level).
+-> "ModelOnly" shows only model-level errors.
+-> "None" disables summary display (use field-level errors only).
+-> asp-validation-for displays error message for a specific property next to its input field.
+
+Common validation attributes and usage:
+-> [Required(ErrorMessage = "Error message")] — field must not be empty.
+-> [Range(1, 100, ErrorMessage = "Error message")] — value must be between 1 and 100.
+-> [StringLength(50, MinimumLength = 5, ErrorMessage = "Error message")] — string length between min and max.
+-> [EmailAddress(ErrorMessage = "Error message")] — validates email format.
+-> [RegularExpression("regex", ErrorMessage = "Error message")] — custom pattern validation.
+-> [Compare("OtherProperty", ErrorMessage = "Error message")] — compare values of two properties.
+
+Client-side validation requires these scripts:
+-> jquery.min.js
+-> jquery.validate.min.js
+-> jquery.validate.unobtrusive.min.js
+-> Model-level errors can be added in controller using:
+-> ModelState.AddModelError(string.Empty, "Error message")
+
+These errors are not tied to any specific property.
+
+Tips:
+-> Use asp-validation-summary="All" for quick display of all errors.
+-> Use asp-validation-for to show error messages near input fields.
+-> Include client validation scripts for instant feedback.
+-> Validation messages come from the ErrorMessage property of validation attributes.
+-> [Required] fails validation if input is empty.
+-> [Range] works only on numeric properties.

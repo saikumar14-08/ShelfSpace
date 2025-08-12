@@ -26,11 +26,19 @@ namespace ShelfSpaceWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-            _db.Categories.Add(obj);
-            _db.SaveChanges();
+            if(obj.Name.ToLower() == obj.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("name","Category Name and Display Order cannot be same.");
+            }
+            if(ModelState.IsValid)
+            {
+                _db.Categories.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
             // After saving the changes to DB we have to redirect to our Index
             //where we get to see all the categories.
-            return RedirectToAction("Index");
+            return View();
         }
     }
 }
