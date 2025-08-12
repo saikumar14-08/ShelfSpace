@@ -188,6 +188,59 @@ Example:
 -> Input tag helper: The asp-for attribute is a server-side attribute used within HTML elements (like <input>, <label>, <select>, <textarea>) in Razor views in ASP.NET Core.
 	Its primary function is to bind an HTML element to a specific property of a model passed to the view.
 
+-> We can use DisplayName Annotation in our Category.cs model to display the required name for the field.
 
-Progams orders:
--> Created a Category model.
+-> To save our data in the DB, we used post form. For that, now we have to goto out category controller and we have create a action method which takes the Category obj as arg and add the obj to the DB and save the changes to db.
+	-> _db.Add(obj); _db.SaveChanges()
+
+
+	=============== FLOW =============
+
+1. Create a database model
+Create a C# class (e.g., Category.cs) in the Models folder with the required fields:
+	public class Category
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+	}
+
+2. Create a Data folder and ApplicationDbContext
+In Data/ApplicationDbContext.cs:
+	using Microsoft.EntityFrameworkCore;
+	using YourNamespace.Models;
+
+	public class ApplicationDbContext : DbContext
+	{
+		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {}
+		public DbSet<Category> Categories { get; set; }
+	}
+
+3. Register the DbContext in Program.cs
+	builder.Services.AddDbContext<ApplicationDbContext>(options =>
+		options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+4. Add a migration
+	Add-Migration InitialCreate
+This generates the SQL structure for your database based on the model and context.
+
+5. Update the database
+	Update-Database
+This actually creates the tables in your database.
+
+6. Create CategoryController
+Inject the context into the constructor:
+	public class CategoryController : Controller
+	{
+		private readonly ApplicationDbContext _db;
+		public CategoryController(ApplicationDbContext db)
+		{
+			_db = db;
+		}
+		public IActionResult Index()
+		{
+			var categories = _db.Categories.ToList();
+			return View(categories);
+		}
+	}
+7. Create the View
+Create a Views/Category/Index.cshtml view to display the categories.

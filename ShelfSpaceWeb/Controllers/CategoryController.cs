@@ -21,5 +21,16 @@ namespace ShelfSpaceWeb.Controllers
         {
             return View();
         }
+
+// This method is to handle the POST call for the Category table.
+        [HttpPost]
+        public IActionResult Create(Category obj)
+        {
+            _db.Categories.Add(obj);
+            _db.SaveChanges();
+            // After saving the changes to DB we have to redirect to our Index
+            //where we get to see all the categories.
+            return RedirectToAction("Index");
+        }
     }
 }
