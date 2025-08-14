@@ -90,14 +90,14 @@ namespace ShelfSpaceWeb.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            var obj = _db.Categories.Find(id);
-            if (ModelState.IsValid)
+            Category? obj = _db.Categories.Find(id);
+            if (obj == null)
             {
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+                return NotFound();
             }
-            return View();
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");         
         }
     }
 }
