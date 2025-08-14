@@ -1,12 +1,13 @@
 ﻿@model Category
 
 <form method="post">
+	<input asp-for="Id" hidden />
 	<div class="border p-3 mt-4 border-radius rounded">
 		<div class="row pb-2">
 			<h2 class="text-primary">
-				Create Category
+				Edit Category
 			</h2>
-			<hr/>
+			<hr />
 		</div>
 		<div asp-validation-summary="All"></div>
 		<div class="mb-3">
@@ -19,20 +20,9 @@
 			<input asp-for="DisplayOrder" type="text" class="form-control" />
 			<span asp-validation-for="DisplayOrder" class="text-danger"></span>
 		</div>
-	
-	<button type="submit" class="btn btn-primary" style="width: 150px">Create</button>
+
+		<button type="submit" class="btn btn-primary" style="width: 150px">Done</button>
 		<a asp-controller="Category" asp-action="Index" class="btn btn-secondary">Go back</a>
 
 	</div>
 </form>
-
-<!-- 
-	If we want to add another file in this file we do it as shown below.
-	Here, we are using partial tag with name attr which has the file name.
-	This file name is taken from the Shared folder as we didn't give any path.
--->
-@section Scripts {
-	@{
-		<partial name="_ValidationScriptsPartial" />
-	}
-}

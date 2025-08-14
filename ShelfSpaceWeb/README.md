@@ -295,3 +295,35 @@ Tips:
 -> Validation messages come from the ErrorMessage property of validation attributes.
 -> [Required] fails validation if input is empty.
 -> [Range] works only on numeric properties.
+
+-> Finding differences between client side and server side validations.
+	-> In client side validation, the validations happen even without loading the page.
+	-> That means the network call doesn't happen where as in server side validation the call happens and we get the appropriate erroe as a response
+
+-> Edit a category.
+	-> When ever we open category page, we are getting the data from category table, 
+	but to edit the data we need to fetch the data and again post the data after the change.
+	-> So we have to create a [httpPost] for the Category data in controller.
+	-> We should also create an edit method so that we can get the specific Id selected by the user.
+	-> There are multiple ways to do this:
+		-> Category? categoryFromDb = _db.Categories.Find(id);
+			-> Find: 
+				-> Available on List<T> only.
+				-> Returns the first matching element or default if no match found.
+				-> Stops after finding the first match.
+			Example:
+				var result = myList.Find(x => x.Id == 5);
+		-> Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id);
+			-> FirstOrDefault
+				-> LINQ extension method — works on any IEnumerable<T>.
+				-> Returns the first matching element or default if no match found.
+				-> Similar to First() but avoids exception on no match.
+			Example:
+				var result = myList.FirstOrDefault(x => x.Id == 5)
+		-> Category? categoryFromDb2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
+			-> Where
+				-> LINQ extension method — works on any IEnumerable<T>.
+				-> Returns all matching elements as an IEnumerable<T>.
+				-> Use .ToList() or .ToArray() to execute and store results.
+			Example:
+				var results = myList.Where(x => x.Id > 5).ToList();
