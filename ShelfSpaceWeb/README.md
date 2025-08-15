@@ -327,3 +327,6 @@ Tips:
 				-> Use .ToList() or .ToArray() to execute and store results.
 			Example:
 				var results = myList.Where(x => x.Id > 5).ToList();
+
+-> To create toast notification we have to make use of TempData in our controller.
+-> The message on tempdata holds until the next render. That means if you refresh the page. the data goes way.
