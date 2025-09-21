@@ -1,0 +1,28 @@
+﻿@page
+@model ShelfSpace_Razor.Pages.Categories.DeleteModel
+
+<form method="post">
+	<input asp-for="Category.Id" hidden />
+	<div class="border p-3 mt-4 border-radius rounded">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Delete Category
+			</h2>
+			<hr />
+		</div>
+		<div asp-validation-summary="All"></div>
+		<div class="mb-3">
+			<label asp-for="Category.Name"></label>
+			<input asp-for="Category.Name" type="text" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="Category.DisplayOrder"></label>
+			<input asp-for="Category.DisplayOrder" type="text" disabled class="form-control" />
+		</div>
+
+		<button type="submit" class="btn btn-danger" style="width: 150px">Delete</button>
+		<a asp-page="/categories/index" class="btn btn-secondary">Go back</a>
+
+	</div>
+</form>
+<partial name="_Notification" />

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShelfSpaceWeb.Data;
+using ShelfSpace_Razor.Data;
 
 #nullable disable
 
-namespace ShelfSpaceWeb.Migrations
+namespace ShelfSpace_Razor.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
     partial class ApplicationDBContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace ShelfSpaceWeb.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ShelfSpaceWeb.Models.Category", b =>
+            modelBuilder.Entity("ShelfSpace_Razor.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,20 +47,20 @@ namespace ShelfSpaceWeb.Migrations
                         new
                         {
                             Id = 1,
-                            DisplayOrder = 1,
+                            DisplayOrder = 10,
                             Name = "Action"
                         },
                         new
                         {
                             Id = 2,
-                            DisplayOrder = 2,
-                            Name = "Sci-Fi"
+                            DisplayOrder = 20,
+                            Name = "Rom Com"
                         },
                         new
                         {
                             Id = 3,
-                            DisplayOrder = 3,
-                            Name = "History"
+                            DisplayOrder = 30,
+                            Name = "Horror"
                         });
                 });
 #pragma warning restore 612, 618

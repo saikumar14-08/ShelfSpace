@@ -1,12 +1,14 @@
-﻿@model List<Category>
+﻿@page
+@model ShelfSpace_Razor.Pages.Categories.IndexModel
+
 <div class="container">
 	<div class="row pt-4">
 		<div class="col-6">
 			<div class="text-primary fs-2 fw-bold text-black">Category List</div>
 		</div>
 		<div class="col-6 text-end">
-			<a asp-controller="Category" asp-action="Create" class="btn btn-primary m-2">
-				Create Category
+			<a asp-page="/categories/create" class="btn btn-primary m-2">
+				Create New Category
 				<i class="bi bi-file-earmark-plus"></i>
 			</a>
 		</div>
@@ -25,17 +27,17 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var cat in Model.OrderBy(el => el.DisplayOrder))
+		@foreach (var cat in Model.CategoryList.OrderBy(el => el.DisplayOrder))
 		{
 			<tr>
 				<td>@cat.Name</td>
 				<td>@cat.DisplayOrder</td>
 				<td>
 					<div class="w-75 btn-group" role="group">
-						<a asp-controller="Category" asp-action="Edit" asp-route-id="@cat.Id" class="btn btn-primary mx-2">
+						<a asp-page="/categories/edit" asp-route-id="@cat.Id" class="btn btn-primary mx-2">
 							<i class="bi bi-pencil-square"></i> Edit
 						</a>
-						<a asp-controller="Category" asp-action="Delete" asp-route-id="@cat.Id" class="btn btn-danger mx-2">
+						<a asp-page="/categories/delete" asp-route-id="@cat.Id" class="btn btn-danger mx-2">
 							<i class="bi bi-trash-fill"></i> Delete
 						</a>
 					</div>

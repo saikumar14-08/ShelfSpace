@@ -19,7 +19,7 @@ The original code lies at global NuGet cache (e.g., C:\Users\<User>\.nuget\packa
 
 -> wwwroot Folder: This folder is crucial for hosting all static content, such as CSS, JavaScript files, images, and other files that do not contain HTML code. The lecture emphasized the importance of organizing static files here to maintain consistency. Specific examples mentioned were global site.css and site.js, the latter currently being empty but intended as a template for future JavaScript code.
 
--> appsettings.json: This file plays a vital role in storing connection strings and secret keys. It is designated for managing sensitive information like email service keys and database connection strings in an organized manner. The lecture also highlighted that there can be environment-specific versions, such as appsettings.development.json and appsettings.production.json, which help ensure that the appropriate configurations are used based on the application’s environment.
+-> appsettings.json: This file plays a vital role in storing connection strings and secret keys. It is designated for managing sensitive information like email service keys and database connection strings in an organized manner. The lecture also highlighted that there can be environment-specific versions, such as appsettings.development.json and appsettings.production.json, which help ensure that the appropriate configurations are used based on the applicationï¿½s environment.
 
 -> Earlier we were using Program.cs and Startup.cs in .NET core both of them combined and only Program.cs is used.
 -> *** Wheneve you have to config something in the pipeline program.cs is the file you have to change.
@@ -197,14 +197,14 @@ Server Side Validations:
 -> Server-side validation always runs regardless of client-side validation and is essential for security.
 -> Model validation happens automatically when a controller action receives a model parameter decorated with validation attributes.
 -> You check validation state in the controller using:
-	if (!ModelState.IsValid) — means validation failed.
+	if (!ModelState.IsValid) ï¿½ means validation failed.
 -> Use ModelState.AddModelError to add custom validation errors manually in controller or service logic.
--> ModelState.AddModelError("PropertyName", "Error message") — property-specific error.
--> ModelState.AddModelError(string.Empty, "Error message") — model-level (general) error.
+-> ModelState.AddModelError("PropertyName", "Error message") ï¿½ property-specific error.
+-> ModelState.AddModelError(string.Empty, "Error message") ï¿½ model-level (general) error.
 -> After validation fails, return the model and errors back to the view so errors can be displayed.
 
 Server-side validation handles:
--> Complex rules that client-side can’t enforce (e.g., checking database uniqueness).
+-> Complex rules that client-side canï¿½t enforce (e.g., checking database uniqueness).
 -> Protects against malicious or disabled client-side validation.
 -> Validation attributes like [Required], [Range], etc., run on server during model binding.
 -> You can implement custom validation attributes by inheriting from ValidationAttribute and overriding IsValid method.
@@ -272,12 +272,12 @@ Client-Side Validation:
 -> asp-validation-for displays error message for a specific property next to its input field.
 
 Common validation attributes and usage:
--> [Required(ErrorMessage = "Error message")] — field must not be empty.
--> [Range(1, 100, ErrorMessage = "Error message")] — value must be between 1 and 100.
--> [StringLength(50, MinimumLength = 5, ErrorMessage = "Error message")] — string length between min and max.
--> [EmailAddress(ErrorMessage = "Error message")] — validates email format.
--> [RegularExpression("regex", ErrorMessage = "Error message")] — custom pattern validation.
--> [Compare("OtherProperty", ErrorMessage = "Error message")] — compare values of two properties.
+-> [Required(ErrorMessage = "Error message")] ï¿½ field must not be empty.
+-> [Range(1, 100, ErrorMessage = "Error message")] ï¿½ value must be between 1 and 100.
+-> [StringLength(50, MinimumLength = 5, ErrorMessage = "Error message")] ï¿½ string length between min and max.
+-> [EmailAddress(ErrorMessage = "Error message")] ï¿½ validates email format.
+-> [RegularExpression("regex", ErrorMessage = "Error message")] ï¿½ custom pattern validation.
+-> [Compare("OtherProperty", ErrorMessage = "Error message")] ï¿½ compare values of two properties.
 
 Client-side validation requires these scripts:
 -> jquery.min.js
@@ -315,14 +315,14 @@ Tips:
 				var result = myList.Find(x => x.Id == 5);
 		-> Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id);
 			-> FirstOrDefault
-				-> LINQ extension method — works on any IEnumerable<T>.
+				-> LINQ extension method ï¿½ works on any IEnumerable<T>.
 				-> Returns the first matching element or default if no match found.
 				-> Similar to First() but avoids exception on no match.
 			Example:
 				var result = myList.FirstOrDefault(x => x.Id == 5)
 		-> Category? categoryFromDb2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
 			-> Where
-				-> LINQ extension method — works on any IEnumerable<T>.
+				-> LINQ extension method ï¿½ works on any IEnumerable<T>.
 				-> Returns all matching elements as an IEnumerable<T>.
 				-> Use .ToList() or .ToArray() to execute and store results.
 			Example:
@@ -330,3 +330,17 @@ Tips:
 
 -> To create toast notification we have to make use of TempData in our controller.
 -> The message on tempdata holds until the next render. That means if you refresh the page. the data goes way.
+
+
+===================== Razor pages ====================
+-> Razor pages are often recommended for new, simpler, page-driven applications or when migrating from traditional web forms, due to their ease of use and rapid development capabilities.
+-> This is easy to implement and can be used for smaller pages.
+-> We don't have traditional Model, View and Controller folders here. We just have the Pages folder.
+-> The routing follows the file system structure of the /Pages folder.
+-> Each file in pages folder is tied to its respective .cshtml file. For example, We have Index.cshtml file tied to Index.cshtml.cs file.
+
+-> Create models folder:
+		-> This is important because we have to create table for our database.
+		-> 
+-> Create data folder to create and store Entity Freamework DBContext class. 
+->
