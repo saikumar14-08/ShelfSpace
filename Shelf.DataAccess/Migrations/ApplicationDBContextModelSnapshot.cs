@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShelfSpaceWeb.Data;
+using Shelf.DataAccess.Data;
 
 #nullable disable
 
-namespace ShelfSpaceWeb.Migrations
+namespace Shelf.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
     partial class ApplicationDBContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace ShelfSpaceWeb.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ShelfSpaceWeb.Models.Category", b =>
+            modelBuilder.Entity("Shelf.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

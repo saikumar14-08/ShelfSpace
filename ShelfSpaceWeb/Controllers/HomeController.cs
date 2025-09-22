@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using ShelfSpaceWeb.Models;
+using Shelf.Models;
 
 namespace ShelfSpaceWeb.Controllers
 {

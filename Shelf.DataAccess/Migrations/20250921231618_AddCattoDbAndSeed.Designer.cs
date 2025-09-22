@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShelfSpaceWeb.Data;
+using Shelf.DataAccess.Data;
 
 #nullable disable
 
-namespace ShelfSpaceWeb.Migrations
+namespace Shelf.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250915034953_Adding_Cateogry_Table")]
-    partial class Adding_Cateogry_Table
+    [Migration("20250921231618_AddCattoDbAndSeed")]
+    partial class AddCattoDbAndSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace ShelfSpaceWeb.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ShelfSpaceWeb.Models.Category", b =>
+            modelBuilder.Entity("Shelf.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShelfSpaceWeb.Data;
-using ShelfSpaceWeb.Models;
+using Shelf.DataAccess.Data;
+using Shelf.Models;
 
 namespace ShelfSpaceWeb.Controllers
 {
@@ -34,7 +34,7 @@ namespace ShelfSpaceWeb.Controllers
             {
                 _db.Categories.Add(obj);
                 _db.SaveChanges();
-                TempData["success"] = "Category created successfully";
+                TempData["success"] = "Category created successfully!";
                 return RedirectToAction("Index");
             }
             // After saving the changes to DB we have to redirect to our Index
@@ -57,7 +57,6 @@ namespace ShelfSpaceWeb.Controllers
             {
                 return NotFound();
             }
-            TempData["success"] = "Category created successfully!!";
             return View(categoryFromDb);
         }
         // This method is to edit the data of the category table.
@@ -68,7 +67,7 @@ namespace ShelfSpaceWeb.Controllers
             {
                 _db.Categories.Update(obj);
                 _db.SaveChanges();
-                TempData["success"] = "Category updated successfully!!";
+                TempData["success"] = "Category updated successfully!";
                 return RedirectToAction("Index");
             }
             // After saving the changes to DB we have to redirect to our Index
@@ -80,7 +79,6 @@ namespace ShelfSpaceWeb.Controllers
         {
             if (id == null || id == 0)
             {
-                // Here, you can also navigate to your own page.
                 return NotFound();
             }
             Category? categoryFromDb = _db.Categories.Find(id);
@@ -100,7 +98,7 @@ namespace ShelfSpaceWeb.Controllers
             }
             _db.Categories.Remove(obj);
             _db.SaveChanges();
-            TempData["success"] = "Category deleted successfully!!";
+            TempData["success"] = "Category deleted successfully!";
             return RedirectToAction("Index");         
         }
     }

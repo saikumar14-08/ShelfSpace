@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ShelfSpaceWeb.Data;
+using Shelf.DataAccess.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,4 +1,4 @@
-namespace ShelfSpaceWeb.Models
+namespace Shelf.Models
 {
     public class ErrorViewModel
     {
