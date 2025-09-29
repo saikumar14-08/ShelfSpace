@@ -338,9 +338,37 @@ Tips:
 -> We don't have traditional Model, View and Controller folders here. We just have the Pages folder.
 -> The routing follows the file system structure of the /Pages folder.
 -> Each file in pages folder is tied to its respective .cshtml file. For example, We have Index.cshtml file tied to Index.cshtml.cs file.
-
 -> Create models folder:
 		-> This is important because we have to create table for our database.
-		-> 
 -> Create data folder to create and store Entity Freamework DBContext class. 
-->
+-> More of this info can be found in readme file of razor pages project in github.
+============ Completed razor pages ==========
+
+N-tier architecture
+-> To implement this right click on the solution and select Add -> new project and select class library.
+-> Similarly create DataAcess project for DB operations and Models project for all Model code.
+-> Utility project for all the common code.
+-> Shelfspace project will now left with Controllers and Views.
+-> If your migrations are corrupt and everything needs to reset then we can delete the migraations folder.
+-> Go to the package manager console and then type add-migration <name>
+-> Make sure you're in the correct project folder.
+-> Then update-databse
+
+Repository pattern
+-> We use this pattern to reduce the tight coupling between the DataAccess layer and database.
+-> So if in future we move to other database our DB functions peroperly without any issues.
+-> Create a folder named Repository which has another folder called as IRepository-> IRepository.cs(Interface).
+-> IRepository is an interface of type T. Where T is class
+-> We extend class T because we can use it with Category, Product and other controllers/classes.
+-> So, this interface has methods to perform all the CRUD ops.
+
+-> Implement a repository interface within a software development setting. 
+-> The focus is on creating a public class that implements the IRepository interface and emphasizes the use of generics, allowing the class to work with different entity types.
+-> DbContext Setup: A private read-only application dbContext is configured for dependency injection.
+-> Generic Types: The use of generic types allows for direct access to the dbSet, facilitating operations like adding entities to the database.
+-> Method Implementations: The lecture covers crucial methods like Get, GetAll, and Remove:
+-> Get: Demonstrates using a Where condition to filter results and retrieving a single entity with FirstOrDefault.
+-> GetAll: Returns all records from the dbSet as a list.
+-> Remove: Introduces the Remove and RemoveRange methods to delete single and multiple entities.
+-> This shows the significance of clean code practices and effective generics usage in repository design, leading to a robust implementation of the repository interface.
+
