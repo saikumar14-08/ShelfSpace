@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Shelf.Models;
 
-namespace ShelfSpaceWeb.Controllers
+namespace ShelfSpaceWeb.Areas.Customer.Controllers
 {
     public class HomeController : Controller
     {

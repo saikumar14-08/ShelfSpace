@@ -5,7 +5,7 @@ using Shelf.DataAccess.Repository.IRepository;
 
 using Shelf.Models;
 
-namespace ShelfSpaceWeb.Controllers
+namespace ShelfSpaceWeb.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {

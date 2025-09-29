@@ -478,3 +478,27 @@ public class CategoryController : Controller
  Explanation:
 	-> _unitOfWork.Category.Add(category) → Adds a category through the repository.
 	-> _unitOfWork.Save() → Saves all changes to the database in one transaction.
+
+-> The main benifit of this is we can just use Unit of Work Interface whenever required.
+
+-> In .NET, "areas" are a way to partition an application into smaller sections, creating a more organized structure, especially for large projects.
+This hierarchy helps in managing different parts of an application separately, facilitating better organization of code and resources.
+-> For example, you can create areas to differentiate between a customer-facing website and an admin panel. 
+When you add an area to your project, it typically includes its own folders for controllers, models, and views under a dedicated "Areas" folder.
+
+-> To add an area in a .NET MVC application, you would:
+-> Right-click on the project in the Solution Explorer.
+-> Select "Add," then choose "New Scaffolded Item."
+-> From the options, select "MVC Area" and provide a name for the area, such as "Admin" or "Customer."
+-> Once added, .NET structures the project to contain separate folders for that area, improving clarity in routing and functionality.
+This makes it easier for developers to maintain and scale the project as it grows.
+
+-> Areas in .NET help organize projects into distinct sections, like an admin panel and a customer-facing website.
+-> The process of adding areas involves right-clicking the project and selecting "Add" → "New Scaffolded Item" → "MVC Area," followed by naming the area (e.g., 'admin' or 'customer').
+-> Upon creating areas, a new 'Areas' folder is generated containing subfolders for each area, including controllers, models, and views.
+-> Updating the routing configuration is crucial, which involves modifying the program.cs file to include area routing.
+-> Controllers should be moved to their respective area folders, ensuring namespaces are updated accordingly.
+-> The area attribute is used to specify which area a controller belongs to, enhancing code organization.
+-> Common issues, such as missing views after moving controllers, are addressed, emphasizing the need to relocate views to the corresponding area folders.
+-> View imports and view start files need to be updated after structuring areas.
+-> Correct routing must be ensured by specifying the area in routing definitions, improving navigation and code organization for better management and scalability.
