@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Shelf.DataAccess.Data;
+using Shelf.DataAccess.Repository;
+using Shelf.DataAccess.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDBContext>(options => options.
 UseSqlServer(builder.Configuration.GetConnectionString("DBConn")));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 

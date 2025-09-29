@@ -372,3 +372,109 @@ Repository pattern
 -> Remove: Introduces the Remove and RemoveRange methods to delete single and multiple entities.
 -> This shows the significance of clean code practices and effective generics usage in repository design, leading to a robust implementation of the repository interface.
 
+-> Introduction of ICategoryRepository: The need for this new interface is highlighted, as it extends the existing IRepository interface to handle operations specific to the category model.
+-> Inheritance of Base Functionality: Implementing ICategoryRepository allows it to inherit fundamental methods from IRepository, ensuring consistency in data manipulation.
+-> Core Methods: The lecture covers essential methods like update and save, which are necessary for modifying and persisting category data effectively.
+-> Final Structure: The structure of the ICategoryRepository interface is outlined, emphasizing its role in combining inherited methods from IRepository with category-specific functionalities.
+-> Public Class Creation: The need for a public class that implements the ICategoryRepository interface is established, leveraging functionality from a generic repository to minimize code redundancy.
+-> Key Methods: The class will include essential methods such as add, get, get all, remove, and remove range, which are predefined in the generic repository.
+-> Dependency Injection: An issue regarding the required parameter 'DB' for the category repository is addressed. The instructor emphasizes the significance of dependency injection in enabling automatic provision of the application DB context upon object creation.
+-> Constructor Addition: To facilitate passing the application DB context, the instructor suggests incorporating a constructor into the category repository class.
+-> Saving and Updating: The lecture concludes with an overview of methods for saving and updating categories, highlighting the use of the underscore db object to handle changes effectively.
+
+-> We have to use our CategoryRepository instead of ApplicationDbContext in our controller.
+-> When we do that we have to check whether all our implementations are correct or not and then
+change the methods according to out Interface(ICategoryRepository).
+-> As we are using our ICategoryRepository through dependency injection we have to register that in our container which is in Program.cs
+-> For now we use scoped lifetime for this service.
+
+-> To change the Database, just go to the appsettings.json and update the connection string then in console
+type update-database. By this, your new DB gets seeded with the default data as we have migrations folder.
+
+-> Unit of Work is like a “manager” for your repositories — it coordinates them and ensures all changes are saved in one go. It centralizes database commits and keeps your code cleaner, safer, and easier to maintain.
+Unit of Work Pattern – Documentation & Explanation
+📌 Concept:
+
+Unit of Work is a design pattern that acts as a single point of coordination for database operations performed through multiple repositories.
+
+It helps to group multiple changes together into one transaction — meaning all operations either succeed together or fail together.
+
+Think of it as a "manager" that keeps track of everything you want to do with the database and then saves all changes at once.
+
+✅ Why We Use It:
+
+To avoid calling SaveChanges() multiple times in different places.
+
+To ensure data consistency by committing all changes in one transaction.
+
+To reduce duplication and make code more organized by providing a single place to manage repository instances and database saves.
+
+🛠️ Steps to Implement Unit of Work
+
+Create an Interface – Define the contract for the Unit of Work.
+
+Add Repository Properties – Expose repositories (like ICategoryRepository) through this interface.
+
+Implement the Interface in a Class – Instantiate the repositories and provide a Save() method that commits all changes.
+
+Use It in Controllers/Services – Access repositories and call Save() only once at the end.
+
+📁 1. Define the Interface
+public interface IUnitOfWork
+{
+    // Expose all repository interfaces here
+    ICategoryRepository Category { get; }
+
+    // Commits all changes made through the repositories
+    void Save();
+}
+
+
+✅ Explanation:
+
+ICategoryRepository Category { get; } → Property that exposes the Category repository.
+
+void Save(); → Method that will be responsible for committing all changes to the database.
+
+📁 2. Implement the Unit of Work Class
+public class UnitOfWork : IUnitOfWork
+{
+    private readonly ApplicationDBContext _db;
+    public ICategoryRepository Category { get; private set; }
+    public UnitOfWork(ApplicationDBContext db)
+    {
+        _db = db;
+        Category = new CategoryRepository(_db);
+    }
+    public void Save()
+    {
+        _db.SaveChanges();
+    }
+}
+Explanation of Each Part:
+	-> private readonly ApplicationDBContext _db;
+		A single DbContext instance shared by all repositories so they participate in the same transaction.
+	-> public ICategoryRepository Category { get; private set; }
+		Provides access to the Category repository. Other repositories (like IProductRepository, IOrderRepository, etc.) would be added similarly.
+	-> public UnitOfWork(ApplicationDBContext db)
+		Injects the database context and initializes repositories with it.
+	-> public void Save()
+		Commits all changes made through any repository in this unit of work. Under the hood, this just calls _db.SaveChanges() once.
+
+ Example Usage in a Controller
+public class CategoryController : Controller
+{
+    private readonly IUnitOfWork _unitOfWork;
+    {
+        _unitOfWork = unitOfWork;
+    }
+    public IActionResult Create(Category category)
+    {
+        _unitOfWork.Category.Add(category);
+        _unitOfWork.Save();
+        return RedirectToAction("Index");
+    }
+}
+ Explanation:
+	-> _unitOfWork.Category.Add(category) → Adds a category through the repository.
+	-> _unitOfWork.Save() → Saves all changes to the database in one transaction.
