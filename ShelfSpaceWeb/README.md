@@ -502,3 +502,10 @@ This makes it easier for developers to maintain and scale the project as it grow
 -> Common issues, such as missing views after moving controllers, are addressed, emphasizing the need to relocate views to the corresponding area folders.
 -> View imports and view start files need to be updated after structuring areas.
 -> Correct routing must be ensured by specifying the area in routing definitions, improving navigation and code organization for better management and scalability.
+
+Creating and seeding products table:
+-> Create a model with all the required fields.
+-> Create the DbSet and Add the seed data into products table.
+-> Then open package manager console and type add-migration SeedProducts.
+-> If the build is successful then you can see the entry in the Migrations folder.
+-> Now type update-database to reflect these changes to our database.
