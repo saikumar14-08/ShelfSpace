@@ -509,3 +509,19 @@ Creating and seeding products table:
 -> Then open package manager console and type add-migration SeedProducts.
 -> If the build is successful then you can see the entry in the Migrations folder.
 -> Now type update-database to reflect these changes to our database.
+
+Working with products table in repository pattern.
+-> Create ProductRepository.cs and IProductRepository.cs interface. Change them by taking reference from the Categories repository.
+-> Now add them to UnitOfWork.
+-> After this, create ProductController and CRUD view pages.
+-> After all this make changes to your layout page to show the products entry in content management System.
+-> In _Layout.cshtml we have a asp controller attribute which links our product to main layout.
+
+Adding a foreign key(CategoryId) to the products table.
+-> We use data annotations for declaring the primary key and foreign keys.
+-> For primary key you can just put the [Key] attribute.
+-> For foreign key you can do it like below:
+		public int CategoryId {  get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
+-> Then apply-migration and update-database ofr the changes to reflect.

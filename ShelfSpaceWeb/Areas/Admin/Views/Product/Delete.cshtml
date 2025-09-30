@@ -1,0 +1,50 @@
+﻿@model Product
+
+<form method="post">
+	<input asp-for="Id" hidden />
+	<div class="border p-3 my-4 border-radius rounded">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Delete Product
+			</h2>
+			<hr />
+		</div>
+		<div asp-validation-summary="All"></div>
+		<div class="mb-3">
+			<label asp-for="Title"></label>
+			<input disabled asp-for="Title" type="text" class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="Description"></label>
+			<input disabled asp-for="Description" type="text" class="form-control" />
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="ISBN"></label>
+			<input disabled asp-for="ISBN" type="text" class="form-control" />
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="ListPrice"></label>
+			<input disabled asp-for="ListPrice" type="text" class="form-control" />
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="Price"></label>
+			<input disabled asp-for="Price" type="text" class="form-control" />
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="Price50"></label>
+			<input disabled asp-for="Price50" type="text" class="form-control" />
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="Price100"></label>
+			<input asp-for="Price100" type="text" class="form-control" />
+		</div>
+		<button type="submit" class="btn btn-danger" style="width: 150px">Delete</button>
+		<a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Go back</a>
+
+	</div>
+</form>
