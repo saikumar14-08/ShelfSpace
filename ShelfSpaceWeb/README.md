@@ -525,3 +525,23 @@ Adding a foreign key(CategoryId) to the products table.
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
 -> Then apply-migration and update-database ofr the changes to reflect.
+
+Projections in EF Core:
+-> Projection means fetching the columns which you want. We can do that using EF Core.
+-> Code for projection: 
+		IEnumerable<SelectListItem> cats= _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString(),
+            });
+-> To consume this data in our view we use asp-items="ViewBag.CategoryList" in our select tag.
+-> View() → A controller method that returns a view (HTML page) to the browser and can pass a strongly-typed model to the view for rendering structured data; scope is limited to the current request.
+-> ViewData → A dictionary (ViewDataDictionary) used to pass small, temporary data from controller to view during the current request; requires casting for complex types and uses string keys.
+-> ViewBag → A dynamic property built on top of ViewData, used to pass small, temporary data from controller to view in the current request without casting; cleaner syntax but runtime-checked.
+-> TempData → A dictionary (TempDataDictionary) used to pass data from one request to another (e.g., across redirects); data persists until read, ideal for messages like “Record saved successfully.”
+
+-> Some packages might ask you to install them but you can use framework reference tag like below:
+  <FrameworkReference Include="Microsoft.AspNetCore.App" />
+-> <FrameworkReference> tells your project to use a shared .NET framework already installed on your machine (like ASP.NET Core or Windows Desktop), 
+so you can access its libraries without downloading individual NuGet packages, reducing project size and ensuring runtime compatibility.
+

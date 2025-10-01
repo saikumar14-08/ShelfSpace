@@ -34,6 +34,14 @@
 		</div>
 
 		<div class="mb-3">
+			<label asp-for="Category""></label>
+			<select asp-for="CategoryId" asp-items="ViewBag.CategoryList" type="text" class="form-control">
+				<option disabled selected>--Select Category--</option>
+			</select>
+			<span asp-validation-for="CategoryId" class="text-danger"></span>
+		</div>
+
+		<div class="mb-3">
 			<label asp-for="Price"></label>
 			<input asp-for="Price" type="text" class="form-control" />
 			<span asp-validation-for="Price" class="text-danger"></span>

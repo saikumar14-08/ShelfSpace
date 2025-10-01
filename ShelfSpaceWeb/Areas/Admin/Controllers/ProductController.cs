@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Shelf.DataAccess.Repository.IRepository;
 using Shelf.Models;
 
@@ -19,6 +20,12 @@ namespace ShelfSpaceWeb.Areas.Admin.Controllers
         }
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> cats = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString(),
+            });
+            ViewBag.CategoryList = cats;
             return View();
         }
 
