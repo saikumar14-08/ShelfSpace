@@ -554,9 +554,16 @@ multiple models to a single view.
 -> In this case, we use ViewModel. Which means model for a specific view.
 -> view models are models that are specifically designed for a view. And the advantage that we get because of that is that
 a view will be strongly typed to one model. And because of that view models are also known as strongly typed views.
-
 -> To implement file upload, we can change the type of the input to file and enctype="multipart/form-data" attribute for the form tag.
-
 -> Instead of having a separate files for create and update, we can just have upsert which can handle both(Update + Insert).
 
--> To use rich text editor we are using tinymce
+-> To use rich text editor we are using tinymce. So we are using CDN link in _Layout.cshtml and then we include the code given in official docs
+in out scripts sections and the editor automatically applies to the textarea tag of that page.
+
+Storing Images:
+-> We have to accept all the images and then store them. For storing the images the perfect location is wwwroot/Images/Products.
+-> We put file upload option in the form and then we have to receive that image and then store it in above location.
+-> For storing images we have a inbuilt functionality which uses IWebHostEnvironment.
+-> While storing this we have to assign a new name for the image(To avoid same file names from multiple users). So for that reason, we can use guid. Guid stands for Global Unique Identifier.
+-> This assigns a unique value for our file. But we also need to store the image in the format uploaded by the user. For this we extract the extension
+from the original name and use it for our guid.
