@@ -558,3 +558,5 @@ a view will be strongly typed to one model. And because of that view models are 
 -> To implement file upload, we can change the type of the input to file and enctype="multipart/form-data" attribute for the form tag.
 
 -> Instead of having a separate files for create and update, we can just have upsert which can handle both(Update + Insert).
+
+-> To use rich text editor we are using tinymce
