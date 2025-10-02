@@ -545,3 +545,16 @@ Projections in EF Core:
 -> <FrameworkReference> tells your project to use a shared .NET framework already installed on your machine (like ASP.NET Core or Windows Desktop), 
 so you can access its libraries without downloading individual NuGet packages, reducing project size and ensuring runtime compatibility.
 
+ViewData: This is used to send the data from your controller to view. Usually our controller is tied to one view(which means only one model shares the data to view).
+-> This is not type safe.
+ViewBag: This is built on top of ViewData which works same as ViewData but with in built type casting.
+
+-> Both of them are used to share small data but in real life scenarios you're expected to share data objects from 
+multiple models to a single view.
+-> In this case, we use ViewModel. Which means model for a specific view.
+-> view models are models that are specifically designed for a view. And the advantage that we get because of that is that
+a view will be strongly typed to one model. And because of that view models are also known as strongly typed views.
+
+-> To implement file upload, we can change the type of the input to file and enctype="multipart/form-data" attribute for the form tag.
+
+-> Instead of having a separate files for create and update, we can just have upsert which can handle both(Update + Insert).

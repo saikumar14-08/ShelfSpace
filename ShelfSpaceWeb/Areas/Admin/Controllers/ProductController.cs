@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Shelf.DataAccess.Repository.IRepository;
 using Shelf.Models;
+using Shelf.Models.ViewModel;
 
 namespace ShelfSpaceWeb.Areas.Admin.Controllers
 {
@@ -18,23 +19,37 @@ namespace ShelfSpaceWeb.Areas.Admin.Controllers
             List<Product> products = _unitOfWork.Product.GetAll().ToList();
             return View(products);
         }
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
-            IEnumerable<SelectListItem> cats = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            ProductVM productVM = new()
             {
-                Text = u.Name,
-                Value = u.Id.ToString(),
-            });
-            ViewBag.CategoryList = cats;
-            return View();
+                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString(),
+                }),
+                Product = new Product()
+            };
+
+            if (id == null || id == 0)
+            {
+                // Insert
+                return View(productVM);
+            }
+            else
+            {
+                // Update
+                productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
+                return View(productVM);
+            }
         }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Upsert(ProductVM obj, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(product);
+                _unitOfWork.Product.Add(obj.Product);
                 _unitOfWork.Save();
                 return RedirectToAction("Index");
             }
