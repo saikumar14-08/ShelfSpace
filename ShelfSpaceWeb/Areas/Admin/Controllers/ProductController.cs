@@ -18,7 +18,7 @@ namespace ShelfSpaceWeb.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            List<Product> products = _unitOfWork.Product.GetAll().ToList();
+            List<Product> products = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
             return View(products);
         }
         public IActionResult Upsert(int? id)
@@ -53,20 +53,39 @@ namespace ShelfSpaceWeb.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if(file != null)
+                if(file != null) // This means, we already have an image file
                 {
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRootPath, @"images\product");
-
+                    // The below is to check if we a new image i.e., updated image
+                    if(!string.IsNullOrEmpty(obj.Product.ImageUrl))
+                    {
+                        // Delete old image
+                        var oldImagePath = Path.Combine(wwwRootPath, obj.Product.ImageUrl.TrimStart('\\'));
+                        Console.WriteLine("Old image path is: ", oldImagePath);
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
                     using(var fileStream = new FileStream(Path.Combine(productPath, fileName),FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
                     obj.Product.ImageUrl = @"\images\product\" + fileName;
                 }
-                _unitOfWork.Product.Add(obj.Product);
+                // If the Id is 0 then we are dealing with new product;
+                if(obj.Product.Id == 0)
+                {
+                    _unitOfWork.Product.Add(obj.Product);
+                    TempData["success"] = "Product created successfully";
+                }
+                else
+                {
+                    _unitOfWork.Product.Update(obj.Product);
+                    TempData["success"] = "Product updated successfully";
+                }
                 _unitOfWork.Save();
-                TempData["success"] = "Created successfully";
                 return RedirectToAction("Index");
             }
             return View(); 
@@ -87,7 +106,7 @@ namespace ShelfSpaceWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Product product)
+        public IActionResult Edit(Product product, IFormFile? file)
         {
             if (ModelState.IsValid)
             {

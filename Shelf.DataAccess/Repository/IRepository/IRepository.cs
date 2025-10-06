@@ -16,9 +16,9 @@ namespace Shelf.DataAccess.Repository.IRepository
 
         // Read Operation:
         // for getting all the categories.
-        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAll(string? includeProperties = null);
         // for getting only the required category using Linq
-        T Get(Expression<Func<T, bool>> filter);
+        T Get(Expression<Func<T, bool>> filter, string? includeProperties = null);
         void Add(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);

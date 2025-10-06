@@ -567,3 +567,17 @@ Storing Images:
 -> While storing this we have to assign a new name for the image(To avoid same file names from multiple users). So for that reason, we can use guid. Guid stands for Global Unique Identifier.
 -> This assigns a unique value for our file. But we also need to store the image in the format uploaded by the user. For this we extract the extension
 from the original name and use it for our guid.
+
+-> The reson behind updating our db in ProductRepository.cs is because we can edit 
+the update logic according to out needs.
+-> For example, when we update just a title even then we are sending the whole data to the controller 
+and it is then updated in the database. 
+-> Instead of that we can take only required property and update it separately from the ProductRepository.cs
+
+Foreign Table entry population:
+-> We have to populate the category name in to our products page. For that we have category Id and we are poplulating the Id.
+-> But to fetch the category name form the categoryId we have to get the name from the cats table.
+-> In product controller we are getting all the products data and sending it to the view. 
+-> Now, we need to include the productname also. For that we have to change the getAll function.
+-> Later, we also need to do the same changes for the get function aswell.
+-> 
