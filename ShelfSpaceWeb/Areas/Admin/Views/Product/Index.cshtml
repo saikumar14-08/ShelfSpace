@@ -14,39 +14,20 @@
 	</div>
 
 </div>
-<table class="table table-bordered table-striped">
+<table id="tblData" class="table table-bordered table-striped">
 	<thead>
 		<tr> 
 			<th>Title</th>
 			<th>ISBN</th>
 			<th>Price</th>
 			<th>Author</th>
-			<th>Category</th>
+			<th>Category</th>			
 			<th></th>
 		</tr>
 	</thead>
-	<tbody>
-		@foreach (var pro in Model)
-		{
-			Console.WriteLine("PRODUCT NAME IS: "+pro);
-			<tr>
-				<td>@pro.Title</td>
-				<td>@pro.ISBN</td>
-				<td>@pro.ListPrice</td>
-				<td>@pro.Author</td>
-				<td>@pro.Category.Name</td>
-				<td>
-					<div class="w-75 btn-group" role="group">
-						<a asp-controller="Product" asp-action="Upsert" asp-route-id="@pro.Id" class="btn btn-primary mx-2">
-							<i class="bi bi-pencil-square"></i> Edit
-						</a>
-						<a asp-controller="Product" asp-action="Delete" asp-route-id="@pro.Id" class="btn btn-danger mx-2">
-							<i class="bi bi-trash-fill"></i> Delete
-						</a>
-					</div>
-				</td>
-				
-			</tr>
-		}
-	</tbody>
+	<tbody></tbody>	
 </table>
+
+@section Scripts {
+	<script src="~/js/product.js"></script>
+}

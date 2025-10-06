@@ -580,4 +580,7 @@ Foreign Table entry population:
 -> In product controller we are getting all the products data and sending it to the view. 
 -> Now, we need to include the productname also. For that we have to change the getAll function.
 -> Later, we also need to do the same changes for the get function aswell.
--> 
+
+DataTables API:
+-> Instead of implementing searching,sorting, filtering and pagination. We can make use of third party API called as
+DataTables.
