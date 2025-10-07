@@ -61,8 +61,7 @@ namespace ShelfSpaceWeb.Areas.Admin.Controllers
                     if(!string.IsNullOrEmpty(obj.Product.ImageUrl))
                     {
                         // Delete old image
-                        var oldImagePath = Path.Combine(wwwRootPath, obj.Product.ImageUrl.TrimStart('\\'));
-                        Console.WriteLine("Old image path is: ", oldImagePath);
+                        var oldImagePath = Path.Combine(wwwRootPath, obj.Product.ImageUrl.TrimStart('\\'));                        
                         if (System.IO.File.Exists(oldImagePath))
                         {
                             System.IO.File.Delete(oldImagePath);
@@ -115,33 +114,7 @@ namespace ShelfSpaceWeb.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             return View();
-        }
-
-        public IActionResult Delete(int? id)
-        {
-            if (id == 0 || id == null)
-            {
-                return NotFound();
-            }
-            Product? prodFromDb = _unitOfWork.Product.Get(u => u.Id == id);
-            if (prodFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(prodFromDb);
-        }
-        [HttpPost, ActionName("Delete")]
-        public IActionResult Delete(int id)
-        {
-            Product? obj = _unitOfWork.Product.Get(u => u.Id == id);
-            if (obj == null)
-            {
-                return NotFound();
-            }
-            _unitOfWork.Product.Remove(obj);
-            _unitOfWork.Save();
-            return RedirectToAction("Index");
-        }
+        }     
 
         #region API CALLS
         [HttpGet]
@@ -149,6 +122,26 @@ namespace ShelfSpaceWeb.Areas.Admin.Controllers
         {
             List<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
             return Json(new { data = products });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteProduct(int? id)
+        {
+            var productToBeDeleted = _unitOfWork.Product.Get(x => x.Id == id);
+            if(productToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Something went wrong" });
+            }
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, productToBeDeleted.ImageUrl.TrimStart('\\'));
+            
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.Product.Remove(productToBeDeleted);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
         }
         #endregion
     }
