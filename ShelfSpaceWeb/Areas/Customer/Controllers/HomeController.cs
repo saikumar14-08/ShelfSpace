@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Shelf.DataAccess.Data;
+using Shelf.DataAccess.Repository.IRepository;
 using Shelf.Models;
 
 namespace ShelfSpaceWeb.Areas.Customer.Controllers
@@ -8,15 +10,25 @@ namespace ShelfSpaceWeb.Areas.Customer.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IUnitOfWork _unitOfWork;
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork db)
         {
             _logger = logger;
+            _unitOfWork = db;
         }
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            return View(products);
         }
+
+        public IActionResult Details(int? id)
+        {
+            Product product = _unitOfWork.Product.Get(x => x.Id == id, includeProperties: "Category");
+            return View(product);
+        }
+
 
         public IActionResult Privacy()
         {
