@@ -584,3 +584,8 @@ Foreign Table entry population:
 DataTables API:
 -> Instead of implementing searching,sorting, filtering and pagination. We can make use of third party API called as
 DataTables.
+-> Just use CDN links and see the documentation 
+
+Implementing login/security in application:
+-> We need to scaffold the project and select Identity and the features which are required.
+-> To do that we need IdentityApplicationDbContext instead of ApplicationDbContext.

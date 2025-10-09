@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Shelf.Models;
 
 namespace Shelf.DataAccess.Data
 {
-    public class ApplicationDBContext: DbContext
+    public class ApplicationDBContext: IdentityDbContext
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {            
@@ -15,6 +17,9 @@ namespace Shelf.DataAccess.Data
         // Seeding Category table.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // When you use IdentityBdCOntext, we have to surely use the below line to make our project work perfectly.
+            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
                 new Category { Id = 2, Name = "Sci-Fi", DisplayOrder = 2 },
