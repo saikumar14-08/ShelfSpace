@@ -582,5 +582,21 @@ Foreign Table entry population:
 -> Later, we also need to do the same changes for the get function aswell.
 
 DataTables API:
--> Instead of implementing searching,sorting, filtering and pagination. We can make use of third party API called as
+-> Instead of implementing searching, sorting, filtering and pagination. We can make use of third party API called as
 DataTables.
+
+Authentication and Authorization:
+-> To implement this authentication and authorization we have to scaffold our web project and select the Identity option whicle doing this.
+-> Also make sure you select the appropriate DBContext. Our normal DbContext doesn't gets detected here and we have to use IdentityDbContext.
+-> Install the required packages if prompted. 
+-> Also make sure you have all the correct package versions becuase if the versions mismatch you end up having errors.
+-> After scaffolding we can see a new folder in Areas is created with name Identity.
+-> In the Identity folder we have multiple files but the important ones are:
+	-> _LoginPartial.cshtml -> This is used to show login/logout/register options in our layout page.
+	-> Account -> Login.cshtml, Register.cshtml -> These are used for login and register pages.
+	-> Data -> ApplicationIdentityDbContext.cs -> This is used to create tables required for identity management.
+-> If your local doesn't run after this add roles in our COntrollers like Admin, Customer etc. because by default the razor pages are created in Identity folder.
+-> After scaffolding we have to create the database tables for identity management.
+-> For that open package manager console and then type add-migration <name> and then update-database.
+-> After this we have to register the identity services in our Program.cs file.
+-> We have to setup the login partial in our _Layout.cshtml to show login/logout/register options.
